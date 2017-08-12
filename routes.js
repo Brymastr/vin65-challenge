@@ -72,6 +72,10 @@ router.post('/transactions', async ctx => {
   ctx.body = transaction;
 });
 
+router.delete('/products', async ctx => {
+  ctx.body = await Product.remove({});
+});
+
 router.delete('/', async ctx => {
   // NOTE: This endpoint will delete everything and is clearly only for dev/test purposes
   await Transaction.remove({});
@@ -81,7 +85,6 @@ router.delete('/', async ctx => {
   await Product.remove({});
   ctx.body = 'Everything has been deleted';
 });
-
 
 
 module.exports = router.routes();

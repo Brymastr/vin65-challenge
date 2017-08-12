@@ -6,7 +6,7 @@ const
   mongoose = require('mongoose');
 
 app.use(bodyParser());
-mongoose.connect('mongodb://localhost/register');
+mongoose.connect(process.env.DB || 'mongodb://localhost/register');
 app.use(cors({origin: '*'}));
 app.use(require('./routes'));
 app.listen(3000);

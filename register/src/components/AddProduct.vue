@@ -7,24 +7,35 @@
 
             <div class="modal-header">
               <slot name="header">
-                <h2>{{name}}</h2>
+                <h2>Add a new product</h2>
               </slot>
             </div>
 
             <div class="modal-body">
               <slot name="body">
-                ${{price}}/{{unit}} x <input v-model="quantity"> {{unit}}
+                Name: <input v-model="name">
+              </slot>
+            </div>
+
+            <div class="modal-body">
+              <slot name="body">
+                Unit: <input v-model="unit">
+              </slot>
+            </div>
+
+            <div class="modal-body">
+              <slot name="body">
+                Price: <input v-model="price">
               </slot>
             </div>
 
             <div class="modal-footer">
               <slot name="footer">
-                Total: ${{ total }}
-                <button class="modal-default-button" @click="addToCart">
-                  Add to cart
+                <button class="modal-default-button" @click="addProduct">
+                  Add
                 </button>
                 <button class="modal-default-button" @click="$emit('close')">
-                  Close
+                  Cancel
                 </button>
               </slot>
             </div>
@@ -40,25 +51,21 @@
 import config from '../config';
 import { Bus } from '../bus';
 export default {
-  name: 'add-item',
+  name: 'add-product',
   data () {
     return {
-      quantity: 0
+      name: '',
+      unit: '',
+      price: 0
     }
   },
-  props: [
-    'name',
-    'price',
-    'unit'
-  ],
   methods: {
-    addToCart: function() {
-      Bus.$emit('addItem', {
+    addProduct: function() {
+      this.$emit('addProduct', {
         name: this.name,
-        price: this.total,
-        quantity: this.quantity,
-        unit: this.unit
-      });
+        unit: this.unit,
+        regular_price: this.price
+      })
       this.$emit('close');
     }
   },
@@ -130,7 +137,6 @@ export default {
   }
 
   input {
-    width: 50px;
-    text-align: right;
+    width: 100px;
   }
 </style>

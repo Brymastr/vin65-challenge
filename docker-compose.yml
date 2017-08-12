@@ -1,0 +1,34 @@
+version: '3.3'
+
+services:
+  
+  web:
+    build: ./register
+    ports:
+      - 8080:8080
+    networks:
+      - internal
+      - external
+
+  api:
+    build: .
+    ports:
+      - 3000:3000
+    networks:
+      - internal
+    environment:
+      - DB=mongodb://db/vin65
+
+  db:
+    image: mongo:latest
+    volumes:
+      - vin65:/data/db
+    networks:
+      - internal
+
+networks:
+  external:
+  internal:
+
+volumes:
+  vin65:
