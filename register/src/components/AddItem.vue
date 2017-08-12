@@ -1,43 +1,44 @@
 <template>
   <div>
     <transition name="modal">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
+      <div class="modal-mask">
+        <div class="modal-wrapper">
+          <div class="modal-container">
 
-          <div class="modal-header">
-            <slot name="header">
-              {{name}}
-            </slot>
-          </div>
+            <div class="modal-header">
+              <slot name="header">
+                {{name}}
+              </slot>
+            </div>
 
-          <div class="modal-body">
-            <slot name="body">
-              ${{price}}/{{unit}} x <input v-model="quantity"> {{unit}}
-            </slot>
-          </div>
+            <div class="modal-body">
+              <slot name="body">
+                ${{price}}/{{unit}} x <input v-model="quantity"> {{unit}}
+              </slot>
+            </div>
 
-          <div class="modal-footer">
-            <slot name="footer">
-              Total: ${{ total }}
-              <button class="modal-default-button" @click="addToCart()">
-                Add to cart
-              </button>
-              <button class="modal-default-button" @click="$emit('close')">
-                Close
-              </button>
-            </slot>
+            <div class="modal-footer">
+              <slot name="footer">
+                Total: ${{ total }}
+                <button class="modal-default-button" @click="addToCart">
+                  Add to cart
+                </button>
+                <button class="modal-default-button" @click="$emit('close')">
+                  Close
+                </button>
+              </slot>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </transition>
+    </transition>
   </div>
 
 </template>
 
 <script>
 import config from '../config';
+import { Bus } from '../bus';
 export default {
   name: 'add-item',
   data () {
@@ -52,11 +53,13 @@ export default {
   ],
   methods: {
     addToCart: function() {
-      this.$dispatch('addItem', {
+      Bus.$emit('addItem', {
         name: this.name,
-        price: this.total 
+        price: this.total,
+        quantity: this.quantity,
+        unit: this.unit
       });
-      $emit('close');
+      this.$emit('close');
     }
   },
   computed: {

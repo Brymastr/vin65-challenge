@@ -5,7 +5,7 @@
       v-for="product in products"
       :key="product.name"
       @click="() => { showModal = true; selectedProduct = product }">
-      
+
       <h1>{{product.name}}</h1>
       <p>${{product.regular_price}}/{{product.unit}}</p>
     </div>
@@ -36,7 +36,7 @@ export default {
     getProducts: async function() {
       const response = await fetch(`${config.url}/products`);
       return response.json();
-    },
+    }
   },
   components: {
     'add-item': AddItem
