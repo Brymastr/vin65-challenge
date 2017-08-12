@@ -19,7 +19,10 @@
   "dependencies": {
     "koa": "^2.3.0",
     "koa-bodyparser": "^4.2.0",
+    "koa-cors": "0.0.16",
     "koa-route": "^3.2.0",
-    "mongoose": "^4.11.6"
+    "koa-router": "^7.2.1",
+    "mongoose": "^4.11.6",
+    "vue-cli": "^2.8.2"
   }
 }

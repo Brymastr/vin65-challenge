@@ -8,16 +8,16 @@ const
   Transaction = require('./Transaction'),
   Coupon = require('./Coupon');
 
-router.get('/products)', async ctx => {
+router.get('/products', async ctx => {
   ctx.body = await Product.find({});
 });
 
-router.post('/products)', async ctx => {
-  const { name, regular_price, unit } = ctx.body;
+router.post('/products', async ctx => {
+  console.log(ctx.request.body)
+  const { name, regular_price, unit } = ctx.request.body;
   const product = new Product({
     name,
     regular_price,
-    sale_price,
     unit
   });
   await product.save();
@@ -29,7 +29,7 @@ router.get('/lineItems/:transaction', async ctx => {
 });
 
 router.post('/lineItems/:transaction', async ctx => {
-  const { product, quantity } = ctx.body;
+  const { product, quantity } = ctx.request.body;
 
   // Get sales for this product
   const sale = await Sale.find({ product });
@@ -62,7 +62,7 @@ router.get('/transactions/:id', async ctx => {
 });
 
 router.post('/transactions', async ctx => {
-  const { name, customer_name } = ctx.body;
+  const { name, customer_name } = ctx.request.body;
   const transaction = new Transaction({
     name,
     customer_name,
